@@ -18,7 +18,9 @@ public class DoublyLinkedList<E> implements MyList<E> {
         size = 0;
     }
     /** Create a list from an array of objects */
-    public DoublyLinkedList(E[] objects) {}
+    public DoublyLinkedList(E[] objects) {
+
+    }
 
     //  <SEVERIN>
     /** Return the head element in the list */
@@ -44,8 +46,9 @@ public class DoublyLinkedList<E> implements MyList<E> {
         first.previous = newNode;
         first = newNode;
         size++;
-
-        if (last == null) { last = first; }
+        if (last == null) {
+            last = first;
+        }
     }
 
     /** Add an element to the end of the list */
@@ -105,7 +108,6 @@ public class DoublyLinkedList<E> implements MyList<E> {
      * removed node.
      */
     public E removeLast() {
-
         if (size == 0) {
             throw new NoSuchElementException();
         }
@@ -116,28 +118,47 @@ public class DoublyLinkedList<E> implements MyList<E> {
         return tmp.element;
 
     }
-    //  </FREDRIK>
-
     /**
      * Remove the element at the specified position in this list. Return the
      * element that was removed from the list.
      */
     public E remove(int index) {
+        if (index < 0 || index >= size()){
+            throw new IndexOutOfBoundsException();
+        }
+        Node<E> tmp = first;
+        for (int  i = 0; i < index; i++)
+        {
+            tmp = tmp.next;
+        }
+        tmp.next = tmp.next.next;
+        size--;
+        return tmp.element;
+    }
+    //  </FREDRIK>
+
+    @Override
+    public String toString() {
         return null;
     }
 
-    @Override
-    public String toString() {}
-
     /** Clear the list */
-    public void clear() {}
+    //  <FREDRIK>
+    public void clear() {
+        first.next = null;
+        last = first;
+        size = 0;
+    }
+    //  </FREDRIK>
 
     /** Return true if this list contains the element o */
-    public boolean contains(Object e) {}
+    public boolean contains(Object e) {
+
+    }
 
     /** Return the element from this list at the specified index */
     public E get(int index) {
-        return null;
+
     }
 
     /**
