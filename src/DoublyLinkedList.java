@@ -148,15 +148,26 @@ public class DoublyLinkedList<E> implements MyList<E> {
         size = 0;
         first = last = null;
     }
-    // </SEVERIN>
 
     /** Return true if this list contains the element o */
     public boolean contains(Object e) {
-
+        ListIterator<E> listIterator = listIterator();
+        while(listIterator.hasNext()) {
+            if(listIterator.next() == e) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /** Return the element from this list at the specified index */
     public E get(int index) throws IndexOutOfBoundsException {
+        ListIterator<E> listIterator = listIterator();
+        while(listIterator.hasNext()) {
+           if(listIterator.nextIndex() == index) {
+               return listIterator.next();
+           }
+        }
         return null;
     }
 
@@ -164,32 +175,56 @@ public class DoublyLinkedList<E> implements MyList<E> {
      * Return the index of the head matching element in this list. Return -1 if
      * no match.
      */
-    public int indexOf(Object e) {}
+    public int indexOf(Object e) {
+        ListIterator<E> listIterator = listIterator();
+        while(listIterator.hasNext()) {
+            if(listIterator.next() == e) {
+                return listIterator.nextIndex();
+            }
+        }
+        return -1;
+    }
 
     /**
      * Return the index of the last matching element in this list Return -1 if
      * no match.
      */
-    public int lastIndexOf(Object e) {}
+    public int lastIndexOf(Object e) {
+        ListIterator<E> listIterator = listIterator(size - 1);
+        while(listIterator.hasPrevious()) {
+            if(listIterator.previous() == e) {
+                return listIterator.previousIndex();
+            }
+        }
+        return -1;
+    }
 
     /**
      * Replace the element at the specified position in this list with the
-     * specified element.
+     * specified element. Returns the old element.
      */
-    public E set(int index, E e) throws IndexOutOfBoundsException {}
+    public E set(int index, E e) throws IndexOutOfBoundsException {
+        ListIterator<E> listIterator = listIterator(index);
+        E old = listIterator.next();
+        listIterator.previous();
+        listIterator.set(e);
+        return old;
+    }
 
     @Override
     public int size() {
         return size;
     }
 
+
     public ListIterator<E> listIterator() {
-        return null;
+        return new LinkedListIterator();
     }
 
     public ListIterator<E> listIterator(int index) {
-        return null;
+        return new LinkedListIterator(index);
     }
+    // </SEVERIN>
 
     @Override
     public Iterator<E> iterator() {
@@ -205,7 +240,6 @@ public class DoublyLinkedList<E> implements MyList<E> {
             current = first;
             index = 0;
         }
-
 
         public LinkedListIterator(int index) {
             this();
@@ -234,7 +268,6 @@ public class DoublyLinkedList<E> implements MyList<E> {
             }
             throw new NoSuchElementException();
         }
-
 
         @Override
         public boolean hasPrevious() {
