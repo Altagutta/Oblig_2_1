@@ -2,6 +2,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.ListIterator;
 
 import static org.junit.Assert.assertEquals;
@@ -35,16 +36,18 @@ public class LinkedListIteratorTest {
         while(listIterator.hasPrevious()) {
             ints.add(listIterator.previous());
         }
-        assertEquals(new Integer[] {5,4,3,2,1} ,ints.toArray());
+        assertEquals(new Integer[] {4,3,2,1} ,ints.toArray());
     }
 
     @Test
     public void listIteratorAddMethod() {
         ListIterator<Integer> listIterator = defaultIntList.listIterator();
         listIterator.add(3);
+        listIterator = defaultIntList.listIterator();
         ArrayList<Integer> ints = new ArrayList<>();
         while(listIterator.hasNext()) {
-            ints.add(listIterator.next());
+            Integer i = listIterator.next();
+            ints.add(i);
         }
         assertEquals(new Integer[] {3,1,2,3,4,5} ,ints.toArray());
     }
@@ -69,6 +72,16 @@ public class LinkedListIteratorTest {
             ints.add(listIterator.next());
         }
         assertEquals(new Integer[] {3,2,3,4,5} ,ints.toArray());
+    }
+
+    @Test
+    public void standardIterator() {
+        Iterator<Integer> iterator = defaultIntList.iterator();
+        ArrayList<Integer> ints = new ArrayList<>();
+        while(iterator.hasNext()) {
+            ints.add(iterator.next());
+        }
+        assertEquals(new Integer[] {1,2,3,4,5} ,ints.toArray());
     }
 
     // </ANDREAS>

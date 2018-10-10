@@ -240,7 +240,7 @@ public class DoublyLinkedList<E> implements MyList<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return null;
+        return new LinkedListIterator();
     }
 
     //  <ANDREAS>
@@ -310,12 +310,25 @@ public class DoublyLinkedList<E> implements MyList<E> {
         @Override
         public void remove() {
             if(current != null) {
-                current.previous.next = current.next;
-                current.next.previous = current.previous;
+                if(current.previous != null) {
+                    current.previous.next = current.next;
+                }
+                else {
+                    first = current.next;
+                }
+                if(current.next != null) {
+                    current.next.previous = current.previous;
+                }
+                else {
+                    last = current;
+                }
                 current = current.next;
                 index--;
+                size--;
             }
-            throw new NoSuchElementException();
+            else {
+                throw new NoSuchElementException();
+            }
         }
 
         @Override
@@ -327,9 +340,18 @@ public class DoublyLinkedList<E> implements MyList<E> {
         public void add(E e) {
             Node<E> node = new Node<>(e);
             node.previous = current.previous;
-            current.previous.next = node;
+            if(current.previous != null) {
+                current.previous.next = node;
+            }
+            else {
+                first = node;
+            }
             node.next = current;
-            current.next.previous = node;
+            current.previous = node;
+            if(node.next == null) {
+                last = node;
+            }
+            size++;
             index++;
         }
     }
