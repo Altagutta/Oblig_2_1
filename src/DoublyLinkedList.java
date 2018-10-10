@@ -192,7 +192,7 @@ public class DoublyLinkedList<E> implements MyList<E> {
         ListIterator<E> listIterator = listIterator();
         while(listIterator.hasNext()) {
             if(listIterator.next() == e) {
-                return listIterator.nextIndex();
+                return listIterator.previousIndex();
             }
         }
         return -1;
@@ -206,7 +206,7 @@ public class DoublyLinkedList<E> implements MyList<E> {
         ListIterator<E> listIterator = listIterator(size - 1);
         while(listIterator.hasPrevious()) {
             if(listIterator.previous() == e) {
-                return listIterator.previousIndex();
+                return listIterator.nextIndex();
             }
         }
         return -1;
