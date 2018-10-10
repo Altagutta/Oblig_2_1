@@ -196,29 +196,97 @@ public class DoublyLinkedList<E> implements MyList<E> {
         return null;
     }
 
+    //  <ANDREAS>
     private class LinkedListIterator implements java.util.ListIterator<E> {
-        // datamedlemmer
-        public LinkedListIterator() {}
+        private Node<E> current;
+        private int index;
+
+        public LinkedListIterator() {
+            current = first;
+            index = 0;
+        }
 
 
-        public LinkedListIterator(int index) {}
-
-        public void setLast() {}
+        public LinkedListIterator(int index) {
+            this();
+            for(int i = 0; i < index; i++) {
+                if(hasNext()) {
+                    current = current.next;
+                    continue;
+                }
+                throw new NoSuchElementException();
+            }
+            this.index = index;
+        }
 
         @Override
-        public boolean hasNext() {}
+        public boolean hasNext() {
+            return current != null;
+        }
 
         @Override
-        public E next() {}
+        public E next() {
+            if(hasNext()) {
+                E e = current.element;
+                current = current.next;
+                index++;
+                return e;
+            }
+            throw new NoSuchElementException();
+        }
 
 
         @Override
-        public boolean hasPrevious() {}
+        public boolean hasPrevious() {
+            return current.previous != null;
+        }
 
         @Override
-        public E previous() {}
+        public E previous() {
+            if(hasPrevious()) {
+                E e = current.previous.element;
+                current = current.previous;
+                index--;
+                return e;
+            }
+            throw new NoSuchElementException();
+        }
 
         @Override
-        public void set(E e) {}
+        public int nextIndex() {
+            return index+1;
+        }
+
+        @Override
+        public int previousIndex() {
+            return index-1;
+        }
+
+        @Override
+        public void remove() {
+            if(current != null) {
+                current.previous.next = current.next;
+                current.next.previous = current.previous;
+                current = current.next;
+                index--;
+            }
+            throw new NoSuchElementException();
+        }
+
+        @Override
+        public void set(E e) {
+            current.element = e;
+        }
+
+        @Override
+        public void add(E e) {
+            Node<E> node = new Node<>(e);
+            node.previous = current.previous;
+            current.previous.next = node;
+            node.next = current;
+            current.next.previous = node;
+            index++;
+        }
     }
+    //  </ANDREAS>
 }
