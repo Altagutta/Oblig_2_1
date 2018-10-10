@@ -45,8 +45,9 @@ public interface MyList<E> extends Collection<E> {
             remove(indexOf(e));
             return true;
         }
-        else
+        else{
             return false;
+        }
     }
 
     @Override

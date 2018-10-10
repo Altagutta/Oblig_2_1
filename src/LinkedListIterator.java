@@ -1,25 +1,49 @@
-public class LinkedListIterator implements java.util.ListIterator<E> {
-    // datamedlemmer
-    public LinkedListIterator() {}
+public class LinkedListIterator<E> implements java.util.ListIterator<E> {
+    private Node<E> current;
 
+    public LinkedListIterator() {
 
-    public LinkedListIterator(int index) {}
+    }
+    public LinkedListIterator(int index) {
 
-    public void setLast() {}
+    }
+    public void setLast() {
 
+    }
     @Override
-    public boolean hasNext() {}
-
+    public boolean hasNext() {
+        return false;
+    }
     @Override
-    public E next() {}
-
-
+    public E next() {
+        return null;
+    }
     @Override
-    public boolean hasPrevious() {}
-
+    public boolean hasPrevious() {
+        return false;
+    }
     @Override
-    public E previous() {}
-
+    public E previous() {
+        return null;
+    }
     @Override
-    public void set(E e) {}
+    public int nextIndex() {
+        return 0;
+    }
+    @Override
+    public int previousIndex() {
+        return 0;
+    }
+    @Override
+    public void remove() {
+
+    }
+    @Override
+    public void set(E e) {
+
+    }
+    @Override
+    public void add(E e) {
+
+    }
 }
