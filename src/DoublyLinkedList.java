@@ -59,7 +59,7 @@ public class DoublyLinkedList<E> implements MyList<E> {
      * Add a new element at the specified index in this list The index of the
      * head element is 0
      */
-    public void add(int index, E e) {
+    public void add(int index, E e) throws IndexOutOfBoundsException {
         if (index == 0) {
             addFirst(e);
         } else if (index >= size) {
@@ -95,7 +95,7 @@ public class DoublyLinkedList<E> implements MyList<E> {
      * Remove the element at the specified position in this list. Return the
      * element that was removed from the list.
      */
-    public E remove(int index) {}
+    public E remove(int index) throws IndexOutOfBoundsException {}
 
     @Override
     public String toString() {}
@@ -107,7 +107,7 @@ public class DoublyLinkedList<E> implements MyList<E> {
     public boolean contains(Object e) {}
 
     /** Return the element from this list at the specified index */
-    public E get(int index) {}
+    public E get(int index) throws IndexOutOfBoundsException {}
 
     /**
      * Return the index of the head matching element in this list. Return -1 if
@@ -125,7 +125,7 @@ public class DoublyLinkedList<E> implements MyList<E> {
      * Replace the element at the specified position in this list with the
      * specified element.
      */
-    public E set(int index, E e) {}
+    public E set(int index, E e) throws IndexOutOfBoundsException {}
 
     @Override
     public int size() {}
