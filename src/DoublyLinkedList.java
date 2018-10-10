@@ -78,42 +78,6 @@ public class DoublyLinkedList<E> implements MyList<E> {
      */
     public E set(int index, E e) {}
 
-    private class LinkedListIterator implements java.util.ListIterator<E> {
-        // datamedlemmer
-        public LinkedListIterator() {}
-
-
-        public LinkedListIterator(int index) {}
-
-        public void setLast() {}
-
-        @Override
-        public boolean hasNext() {}
-
-        @Override
-        public E next() {}
-
-
-        @Override
-        public boolean hasPrevious() {}
-
-        @Override
-        public E previous() {}
-
-        @Override
-        public void set(E e) {}
-    }
-
-    private class Node<E> {
-        E element;
-        Node<E> next;
-        Node<E> previous;
-
-        public Node(E o) {
-            element = o;
-        }
-    }
-
     @Override
     public int size() {}
 
