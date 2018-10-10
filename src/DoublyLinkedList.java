@@ -126,14 +126,35 @@ public class DoublyLinkedList<E> implements MyList<E> {
         return null;
     }
 
+    //  <SEVERIN>
     @Override
-    public String toString() {}
+    public String toString() {
+        StringBuilder result = new StringBuilder("[");
+        Node<E> current = first;
+        for (int i = 0; i < size; i++) {
+            result.append(current.element);
+            current = current.next;
+            if (current != null) {
+                result.append(", ");
+            }
+            else {
+                result.append("]");
+            }
+        }
+        return result.toString();
+    }
 
     /** Clear the list */
-    public void clear() {}
+    public void clear() {
+        size = 0;
+        first = last = null;
+    }
+    // </SEVERIN>
 
     /** Return true if this list contains the element o */
-    public boolean contains(Object e) {}
+    public boolean contains(Object e) {
+
+    }
 
     /** Return the element from this list at the specified index */
     public E get(int index) throws IndexOutOfBoundsException {
