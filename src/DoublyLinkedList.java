@@ -1,5 +1,7 @@
 import java.util.Iterator;
         import java.util.ListIterator;
+import java.util.NoSuchElementException;
+
 // MERK:
 // Alle metoder som tar inn en index skal kaste indexoutofbound exception
 //
@@ -9,8 +11,12 @@ public class DoublyLinkedList<E> implements MyList<E> {
     private int size = 0;
     //  </SEVERIN>
 
-    public DoublyLinkedList() {}
-
+    /** Create a default list */
+    public DoublyLinkedList() {
+        first = null;
+        last = null;
+        size = 0;
+    }
     /** Create a list from an array of objects */
     public DoublyLinkedList(E[] objects) {}
 
@@ -83,19 +89,42 @@ public class DoublyLinkedList<E> implements MyList<E> {
      * Remove the head node and return the object that is contained in the
      * removed node.
      */
-    public E removeFirst() {}
-
+    //  <FREDIK>
+    public E removeFirst() {
+        if (size == 0) {
+            throw new NoSuchElementException();
+        }
+        Node<E> tmp = first;
+        first = first.next;
+        first.previous = null;
+        size--;
+        return tmp.element;
+    }
     /**
      * Remove the last node and return the object that is contained in the
      * removed node.
      */
-    public E removeLast() {}
+    public E removeLast() {
+
+        if (size == 0) {
+            throw new NoSuchElementException();
+        }
+        Node<E> tmp = last;
+        last = last.next;
+        last.previous = null;
+        size--;
+        return tmp.element;
+
+    }
+    //  </FREDRIK>
 
     /**
      * Remove the element at the specified position in this list. Return the
      * element that was removed from the list.
      */
-    public E remove(int index) throws IndexOutOfBoundsException {}
+    public E remove(int index) throws IndexOutOfBoundsException {
+        return null;
+    }
 
     @Override
     public String toString() {}
@@ -107,7 +136,9 @@ public class DoublyLinkedList<E> implements MyList<E> {
     public boolean contains(Object e) {}
 
     /** Return the element from this list at the specified index */
-    public E get(int index) throws IndexOutOfBoundsException {}
+    public E get(int index) throws IndexOutOfBoundsException {
+        return null;
+    }
 
     /**
      * Return the index of the head matching element in this list. Return -1 if
@@ -128,15 +159,46 @@ public class DoublyLinkedList<E> implements MyList<E> {
     public E set(int index, E e) throws IndexOutOfBoundsException {}
 
     @Override
-    public int size() {}
+    public int size() {
+        return size;
+    }
 
+    public ListIterator<E> listIterator() {
+        return null;
+    }
 
-    public ListIterator<E> listIterator() {}
-
-    public ListIterator<E> listIterator(int index) {}
+    public ListIterator<E> listIterator(int index) {
+        return null;
+    }
 
     @Override
     public Iterator<E> iterator() {
         return null;
+    }
+
+    private class LinkedListIterator implements java.util.ListIterator<E> {
+        // datamedlemmer
+        public LinkedListIterator() {}
+
+
+        public LinkedListIterator(int index) {}
+
+        public void setLast() {}
+
+        @Override
+        public boolean hasNext() {}
+
+        @Override
+        public E next() {}
+
+
+        @Override
+        public boolean hasPrevious() {}
+
+        @Override
+        public E previous() {}
+
+        @Override
+        public void set(E e) {}
     }
 }
