@@ -18,7 +18,9 @@ public class DoublyLinkedList<E> implements MyList<E> {
         size = 0;
     }
     /** Create a list from an array of objects */
-    public DoublyLinkedList(E[] objects) {}
+    public DoublyLinkedList(E[] objects) {
+
+    }
 
     //  <SEVERIN>
     /** Return the head element in the list */
@@ -122,9 +124,20 @@ public class DoublyLinkedList<E> implements MyList<E> {
      * Remove the element at the specified position in this list. Return the
      * element that was removed from the list.
      */
-    public E remove(int index) throws IndexOutOfBoundsException {
-        return null;
+    public E remove(int index) {
+        if (index < 0 || index >= size()){
+            throw new IndexOutOfBoundsException();
+        }
+        Node<E> tmp = first;
+        for (int  i = 0; i < index; i++)
+        {
+            tmp = tmp.next;
+        }
+        tmp.next = tmp.next.next;
+        size--;
+        return tmp.element;
     }
+    //  </FREDRIK>
 
     //  <SEVERIN>
     @Override
@@ -215,7 +228,6 @@ public class DoublyLinkedList<E> implements MyList<E> {
     public int size() {
         return size;
     }
-
 
     public ListIterator<E> listIterator() {
         return new LinkedListIterator();
