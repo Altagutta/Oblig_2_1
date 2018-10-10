@@ -108,6 +108,7 @@ public class DoublyLinkedList<E> implements MyList<E> {
      * removed node.
      */
     public E removeLast() {
+
         if (size == 0) {
             throw new NoSuchElementException();
         }
@@ -118,6 +119,8 @@ public class DoublyLinkedList<E> implements MyList<E> {
         return tmp.element;
 
     }
+    //  </FREDRIK>
+
     /**
      * Remove the element at the specified position in this list. Return the
      * element that was removed from the list.
@@ -137,19 +140,29 @@ public class DoublyLinkedList<E> implements MyList<E> {
     }
     //  </FREDRIK>
 
+    //  <SEVERIN>
     @Override
     public String toString() {
-        return null;
+        StringBuilder result = new StringBuilder("[");
+        Node<E> current = first;
+        for (int i = 0; i < size; i++) {
+            result.append(current.element);
+            current = current.next;
+            if (current != null) {
+                result.append(", ");
+            } else {
+                result.append("]");
+            }
+        }
+        return result.toString();
     }
 
     /** Clear the list */
-    //  <FREDRIK>
     public void clear() {
-        first.next = null;
-        last = first;
         size = 0;
+        first = last = null;
     }
-    //  </FREDRIK>
+    // </SEVERIN>
 
     /** Return true if this list contains the element o */
     public boolean contains(Object e) {
@@ -157,8 +170,8 @@ public class DoublyLinkedList<E> implements MyList<E> {
     }
 
     /** Return the element from this list at the specified index */
-    public E get(int index) {
-
+    public E get(int index) throws IndexOutOfBoundsException {
+        return null;
     }
 
     /**
@@ -177,7 +190,7 @@ public class DoublyLinkedList<E> implements MyList<E> {
      * Replace the element at the specified position in this list with the
      * specified element.
      */
-    public E set(int index, E e) {}
+    public E set(int index, E e) throws IndexOutOfBoundsException {}
 
     @Override
     public int size() {
@@ -196,4 +209,98 @@ public class DoublyLinkedList<E> implements MyList<E> {
     public Iterator<E> iterator() {
         return null;
     }
+
+    //  <ANDREAS>
+    private class LinkedListIterator implements java.util.ListIterator<E> {
+        private Node<E> current;
+        private int index;
+
+        public LinkedListIterator() {
+            current = first;
+            index = 0;
+        }
+
+
+        public LinkedListIterator(int index) {
+            this();
+            for(int i = 0; i < index; i++) {
+                if(hasNext()) {
+                    current = current.next;
+                    continue;
+                }
+                throw new NoSuchElementException();
+            }
+            this.index = index;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        @Override
+        public E next() {
+            if(hasNext()) {
+                E e = current.element;
+                current = current.next;
+                index++;
+                return e;
+            }
+            throw new NoSuchElementException();
+        }
+
+
+        @Override
+        public boolean hasPrevious() {
+            return current.previous != null;
+        }
+
+        @Override
+        public E previous() {
+            if(hasPrevious()) {
+                E e = current.previous.element;
+                current = current.previous;
+                index--;
+                return e;
+            }
+            throw new NoSuchElementException();
+        }
+
+        @Override
+        public int nextIndex() {
+            return index+1;
+        }
+
+        @Override
+        public int previousIndex() {
+            return index-1;
+        }
+
+        @Override
+        public void remove() {
+            if(current != null) {
+                current.previous.next = current.next;
+                current.next.previous = current.previous;
+                current = current.next;
+                index--;
+            }
+            throw new NoSuchElementException();
+        }
+
+        @Override
+        public void set(E e) {
+            current.element = e;
+        }
+
+        @Override
+        public void add(E e) {
+            Node<E> node = new Node<>(e);
+            node.previous = current.previous;
+            current.previous.next = node;
+            node.next = current;
+            current.next.previous = node;
+            index++;
+        }
+    }
+    //  </ANDREAS>
 }
