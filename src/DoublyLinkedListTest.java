@@ -29,17 +29,17 @@ public class DoublyLinkedListTest {
 
     @Test
     public void getFirstMethod() {
-        assertEquals(java.util.Optional.of(1), defaultIntList.getFirst());
+        assertTrue(new Integer(1).equals(defaultIntList.getFirst()));
     }
 
     @Test
     public void getLastMethod() {
-        assertEquals(java.util.Optional.of(1), defaultIntList.getLast());
+        assertTrue(new Integer(5).equals(defaultIntList.getLast()));
     }
 
     @Test
     public void getMethod() {
-        assertEquals(java.util.Optional.of(3), defaultIntList.get(2));
+        assertTrue(new Integer(3).equals(defaultIntList.get(2)));
     }
 
     @Test
