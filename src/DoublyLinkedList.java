@@ -136,8 +136,7 @@ public class DoublyLinkedList<E> implements MyList<E> {
             current = current.next;
             if (current != null) {
                 result.append(", ");
-            }
-            else {
+            } else {
                 result.append("]");
             }
         }
