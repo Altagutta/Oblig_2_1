@@ -13,13 +13,14 @@ public class DoublyLinkedList<E> implements MyList<E> {
 
     /** Create a default list */
     public DoublyLinkedList() {
-        first = null;
-        last = null;
-        size = 0;
+        first = last = null;
     }
     /** Create a list from an array of objects */
     public DoublyLinkedList(E[] objects) {
-
+        first = last = null;
+        for(E object : objects) {
+            addLast(object);
+        }
     }
 
     //  <SEVERIN>
@@ -142,15 +143,13 @@ public class DoublyLinkedList<E> implements MyList<E> {
     //  <SEVERIN>
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder("[");
+        StringBuilder result = new StringBuilder();
         Node<E> current = first;
         for (int i = 0; i < size; i++) {
             result.append(current.element);
             current = current.next;
             if (current != null) {
                 result.append(", ");
-            } else {
-                result.append("]");
             }
         }
         return result.toString();
@@ -177,9 +176,10 @@ public class DoublyLinkedList<E> implements MyList<E> {
     public E get(int index) throws IndexOutOfBoundsException {
         ListIterator<E> listIterator = listIterator();
         while(listIterator.hasNext()) {
-           if(listIterator.nextIndex() == index) {
+           if(listIterator.nextIndex() == index + 1) {
                return listIterator.next();
            }
+           listIterator.next();
         }
         return null;
     }
