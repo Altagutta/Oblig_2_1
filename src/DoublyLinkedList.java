@@ -108,35 +108,49 @@ public class DoublyLinkedList<E> implements MyList<E> {
      * removed node.
      */
     public E removeLast() {
-
-        if (size == 0) {
+        E tmp = first.element;
+        if(size==0){
             throw new NoSuchElementException();
         }
-        Node<E> tmp = last;
-        last = last.next;
-        last.previous = null;
-        size--;
-        return tmp.element;
-
+        else if(size==1) {
+            tmp = removeFirst();
+        }
+        else{
+            last = last.previous;
+            tmp = last.next.element;
+            last.next=null;
+            size--;
+        }
+        return tmp;
     }
-    //  </FREDRIK>
-
     /**
      * Remove the element at the specified position in this list. Return the
      * element that was removed from the list.
      */
     public E remove(int index) {
+        E obj = null;
         if (index < 0 || index >= size()){
             throw new IndexOutOfBoundsException();
         }
-        Node<E> tmp = first;
-        for (int  i = 0; i < index; i++)
-        {
-            tmp = tmp.next;
+        if(index == 0){
+            obj = removeFirst();
         }
-        tmp.next = tmp.next.next;
-        size--;
-        return tmp.element;
+        else if(index == size){
+            obj = removeLast();
+        }
+        else{
+            ListIterator<E> listIterator = listIterator();
+            int i = 1;
+            while (listIterator.hasNext()) {
+                E temp = listIterator.next();
+                if (i == index+1) {
+                    obj = listIterator.previous();
+                    listIterator.remove();
+                }
+                i++;
+            }
+        }
+        return obj;
     }
     //  </FREDRIK>
 
