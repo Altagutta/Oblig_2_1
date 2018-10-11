@@ -68,14 +68,14 @@ public class DoublyLinkedListTest {
     public void removeLastMethod() {
         int removed = defaultIntList.removeLast();
         assertEquals("Does not return array in specified order" ,"1, 2, 3, 4", defaultIntList.toString());
-        assertEquals("Does not return same object" ,1 ,removed);
+        assertEquals("Does not return same object" ,5 ,removed);
     }
 
     @Test
     public void removeMethod() {
         int removed = defaultIntList.remove(3);
         assertEquals("Does not return array in specified order" ,"1, 2, 3, 5", defaultIntList.toString());
-        assertEquals("Does not return same object" ,1 ,removed);
+        assertEquals("Does not return same object" ,4 ,removed);
     }
 
     @Test
