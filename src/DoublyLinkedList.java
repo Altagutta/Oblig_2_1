@@ -246,6 +246,7 @@ public class DoublyLinkedList<E> implements MyList<E> {
     //  <ANDREAS>
     private class LinkedListIterator implements java.util.ListIterator<E> {
         private Node<E> current;
+        private Node lastAccessed;
         private int index;
 
         public LinkedListIterator() {
@@ -274,6 +275,7 @@ public class DoublyLinkedList<E> implements MyList<E> {
         public E next() {
             if(hasNext()) {
                 E e = current.element;
+                lastAccessed = current;
                 current = current.next;
                 index++;
                 return e;
@@ -290,6 +292,7 @@ public class DoublyLinkedList<E> implements MyList<E> {
         public E previous() {
             if(hasPrevious()) {
                 E e = current.previous.element;
+                lastAccessed = current;
                 current = current.previous;
                 index--;
                 return e;
@@ -315,20 +318,23 @@ public class DoublyLinkedList<E> implements MyList<E> {
 
         @Override
         public void remove() {
-            if(current != null) {
-                if(current.previous != null) {
-                    current.previous.next = current.next;
+            if(lastAccessed == null) {
+                throw new IllegalStateException();
+            }
+            if(lastAccessed != null) {
+                if(lastAccessed.previous != null) {
+                    lastAccessed.previous.next = lastAccessed.next;
                 }
                 else {
-                    first = current.next;
+                    first = lastAccessed.next;
                 }
-                if(current.next != null) {
-                    current.next.previous = current.previous;
+                if(lastAccessed.next != null) {
+                    lastAccessed.next.previous = lastAccessed.previous;
                 }
                 else {
-                    last = current;
+                    last = lastAccessed;
                 }
-                current = current.next;
+                lastAccessed = lastAccessed.next;
                 index--;
                 size--;
             }
@@ -339,7 +345,10 @@ public class DoublyLinkedList<E> implements MyList<E> {
 
         @Override
         public void set(E e) {
-            current.element = e;
+            if(lastAccessed == null) {
+                throw new IllegalStateException();
+            }
+            lastAccessed.element = e;
         }
 
         @Override
@@ -359,6 +368,7 @@ public class DoublyLinkedList<E> implements MyList<E> {
             }
             size++;
             index++;
+            lastAccessed = null;
         }
     }
     //  </ANDREAS>

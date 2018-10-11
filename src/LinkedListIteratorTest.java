@@ -55,6 +55,7 @@ public class LinkedListIteratorTest {
     @Test
     public void listIteratorRemoveMethod() {
         ListIterator<Integer> listIterator = defaultIntList.listIterator();
+        listIterator.next();
         listIterator.remove();
         ArrayList<Integer> ints = new ArrayList<>();
         while(listIterator.hasNext()) {
@@ -66,8 +67,10 @@ public class LinkedListIteratorTest {
     @Test
     public void listIteratorSetMethod() {
         ListIterator<Integer> listIterator = defaultIntList.listIterator();
+        listIterator.next();
         listIterator.set(3);
         ArrayList<Integer> ints = new ArrayList<>();
+        listIterator = defaultIntList.listIterator();
         while(listIterator.hasNext()) {
             ints.add(listIterator.next());
         }
@@ -77,11 +80,10 @@ public class LinkedListIteratorTest {
     @Test
     public void listIteratorAddAndRemoveCombined() {
         ListIterator<Integer> listIterator = defaultIntList.listIterator();
-        listIterator.remove();
+        listIterator.next();
         listIterator.remove();
         listIterator.add(1);
         listIterator.add(2);
-        listIterator.remove();
         listIterator.next();
         listIterator.remove();
         ArrayList<Integer> ints = new ArrayList<>();
@@ -89,7 +91,20 @@ public class LinkedListIteratorTest {
         while(listIterator.hasNext()) {
             ints.add(listIterator.next());
         }
-        assertEquals(new Integer[] {1,2,4} ,ints.toArray());
+        assertEquals(new Integer[] {1,2,3,4,5} ,ints.toArray());
+    }
+    @Test
+    public void listIteratorAddAndRemovePrevious() {
+        ListIterator<Integer> listIterator = defaultIntList.listIterator(defaultIntList.size()-1);
+        listIterator.previous();
+        listIterator.remove();
+        listIterator.add(5);
+        ArrayList<Integer> ints = new ArrayList<>();
+        listIterator = defaultIntList.listIterator();
+        while(listIterator.hasNext()) {
+            ints.add(listIterator.next());
+        }
+        assertEquals(new Integer[] {1,2,3,5,4} ,ints.toArray());
     }
 
     @Test
