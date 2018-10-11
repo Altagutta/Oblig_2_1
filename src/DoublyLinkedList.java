@@ -260,7 +260,7 @@ public class DoublyLinkedList<E> implements MyList<E> {
                     current = current.next;
                     continue;
                 }
-                throw new NoSuchElementException();
+                throw new IndexOutOfBoundsException();
             }
             this.index = index;
         }
@@ -299,12 +299,18 @@ public class DoublyLinkedList<E> implements MyList<E> {
 
         @Override
         public int nextIndex() {
-            return index+1;
+            if(hasNext()) {
+                return index+1;
+            }
+            throw new IndexOutOfBoundsException();
         }
 
         @Override
         public int previousIndex() {
-            return index-1;
+            if(hasPrevious()) {
+                return index-1;
+            }
+            throw new IndexOutOfBoundsException();
         }
 
         @Override
