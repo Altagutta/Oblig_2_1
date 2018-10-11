@@ -140,12 +140,12 @@ public class DoublyLinkedList<E> implements MyList<E> {
         }
         else{
             ListIterator<E> listIterator = listIterator();
-            int i = 1;
-            while (listIterator.hasNext()) {
-                E temp = listIterator.next();
-                if (i == index+1) {
-                    obj = listIterator.previous();
+            int i = 0;
+            while(listIterator.hasNext()) {
+                obj = listIterator.next();
+                if(i == index) {
                     listIterator.remove();
+                    break;
                 }
                 i++;
             }
@@ -233,7 +233,6 @@ public class DoublyLinkedList<E> implements MyList<E> {
     public E set(int index, E e) throws IndexOutOfBoundsException {
         ListIterator<E> listIterator = listIterator(index);
         E old = listIterator.next();
-        listIterator.previous();
         listIterator.set(e);
         return old;
     }
@@ -335,26 +334,29 @@ public class DoublyLinkedList<E> implements MyList<E> {
             if(lastAccessed == null) {
                 throw new IllegalStateException();
             }
-            if(lastAccessed != null) {
-                if(lastAccessed.previous != null) {
-                    lastAccessed.previous.next = lastAccessed.next;
-                }
-                else {
-                    first = lastAccessed.next;
-                }
-                if(lastAccessed.next != null) {
-                    lastAccessed.next.previous = lastAccessed.previous;
-                }
-                else {
-                    last = lastAccessed;
-                }
-                lastAccessed = lastAccessed.next;
-                index--;
-                size--;
+            Node _last = lastAccessed.previous;
+            Node _next = lastAccessed.next;
+            if(_last != null) {
+                _last.next = _next;
             }
             else {
-                throw new NoSuchElementException();
+                first = _next;
             }
+            if(_next != null) {
+                _next.previous = _last;
+            }
+            else {
+                last = _last;
+            }
+            size--;
+            if (current == lastAccessed) {
+                current = _next;
+            }
+            else {
+                index--;
+            }
+            lastAccessed = null;
+
         }
 
         @Override
